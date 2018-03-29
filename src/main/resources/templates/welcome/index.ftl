@@ -13,9 +13,11 @@
 </head>
 <body>
 
+
 <div class="jumbotron">
     <div class="container text-center">
-        <h1>Awesome File Uploader</h1>
+        <h2>Awesome File Uploader</h2>
+        <h1 id="count"></h1> Files uploaded
     </div>
 </div>
 
@@ -28,17 +30,32 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    Dropzone.options.fileUpload = {
-        paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2, // MB
-        addRemoveLinks: false,
-        init: function () {
-            this.on("complete", function (file) {
-                this.removeFile(file);
-            });
-        }
-    };
+    $(document).ready(function () {
+        // Dropzone
+        Dropzone.options.fileUpload = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 2, // MB
+            addRemoveLinks: false,
+            init: function () {
+                this.on("complete", function (file) {
+                    this.removeFile(file);
+                });
+            }
+        };
+
+        // Axios
+        axios.get('/api/stats')
+                .then(function (response) {
+                    $("#count").text(response.data.total_files);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+    });
 </script>
 
 </body>

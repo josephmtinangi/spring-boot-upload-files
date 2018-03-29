@@ -1,4 +1,4 @@
-package io.github.josephmtinangi.springbootuploadfiles.controllers;
+package io.github.josephmtinangi.springbootuploadfiles.controllers.web;
 
 import io.github.josephmtinangi.springbootuploadfiles.models.UploadedFile;
 import io.github.josephmtinangi.springbootuploadfiles.repositories.UploadedFileRepository;
