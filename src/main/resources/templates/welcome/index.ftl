@@ -13,7 +13,6 @@
 </head>
 <body>
 
-
 <div class="jumbotron">
     <div class="container text-center">
         <h2>Awesome File Uploader</h2>
@@ -26,6 +25,11 @@
         <div class="col-sm-6 col-sm-offset-3">
             <form action="/" method="post" class="dropzone" id="file-upload" enctype="multipart/form-data">
             </form>
+
+            <hr>
+
+            <a href="/files" class="btn btn-primary btn-block">Browse</a>
+
         </div>
     </div>
 </div>
