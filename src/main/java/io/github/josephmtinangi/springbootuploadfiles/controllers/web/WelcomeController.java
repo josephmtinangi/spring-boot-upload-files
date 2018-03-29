@@ -1,5 +1,6 @@
 package io.github.josephmtinangi.springbootuploadfiles.controllers.web;
 
+import com.pusher.rest.Pusher;
 import io.github.josephmtinangi.springbootuploadfiles.models.UploadedFile;
 import io.github.josephmtinangi.springbootuploadfiles.repositories.UploadedFileRepository;
 import io.github.josephmtinangi.springbootuploadfiles.utilities.Helper;
@@ -14,12 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collections;
+
 @Controller
 @RequestMapping(path = "/")
 public class WelcomeController {
 
-    @Value("${settings.rootStorage}")
+    @Value("${ROOT_STORAGE}")
     private String rootStorage;
+
+    @Value("${PUSHER_APP_ID}")
+    private String appId;
+
+    @Value("${PUSHER_APP_KEY}")
+    private String appKey;
+
+    @Value("${PUSHER_APP_SECRET}")
+    private String appSecret;
 
     @Autowired
     private UploadedFileRepository uploadedFileRepository;
@@ -45,6 +57,12 @@ public class WelcomeController {
         uploadedFile.setOriginalName(file.getOriginalFilename());
         uploadedFile.setPath(path);
         uploadedFileRepository.save(uploadedFile);
+
+        Pusher pusher = new Pusher(appId, appKey, appSecret);
+        pusher.setCluster("ap2");
+        pusher.setEncrypted(true);
+
+        pusher.trigger("stats", "file-uploaded", Collections.singletonMap("message", "File uploaded"));
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }

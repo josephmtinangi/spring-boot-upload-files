@@ -2,4 +2,8 @@ JDBC_DATABASE_URL=jdbc:postgresql://localhost:5432/file_uploadr
 JDBC_DATABASE_USERNAME=postgres
 JDBC_DATABASE_PASSWORD=postgres
 
-settings.rootStorage=../storage
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+
+ROOT_STORAGE=../storage

@@ -32,8 +32,23 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        function loadStats() {
+            // Axios
+            axios.get('/api/stats')
+                    .then(function (response) {
+                        $("#count").text(response.data.total_files);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+        }
+
+        loadStats();
+
         // Dropzone
         Dropzone.options.fileUpload = {
             paramName: "file", // The name that will be used to transfer the file
@@ -45,7 +60,18 @@
                 });
             }
         };
+    });
 
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('70f967d7689afea9ceb0', {
+        cluster: 'ap2',
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('stats');
+    channel.bind('file-uploaded', function (data) {
         // Axios
         axios.get('/api/stats')
                 .then(function (response) {
@@ -54,8 +80,8 @@
                 .catch(function (error) {
                     console.log(error);
                 });
-
     });
+
 </script>
 
 </body>
