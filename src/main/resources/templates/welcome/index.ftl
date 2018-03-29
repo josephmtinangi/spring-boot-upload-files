@@ -23,7 +23,6 @@
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <form action="/" method="post" class="dropzone" id="file-upload" enctype="multipart/form-data">
-
             </form>
         </div>
     </div>
@@ -32,7 +31,13 @@
 <script>
     Dropzone.options.fileUpload = {
         paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2 // MB
+        maxFilesize: 2, // MB
+        addRemoveLinks: false,
+        init: function () {
+            this.on("complete", function (file) {
+                this.removeFile(file);
+            });
+        }
     };
 </script>
 
