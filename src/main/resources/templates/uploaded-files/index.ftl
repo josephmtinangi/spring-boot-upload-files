@@ -26,7 +26,11 @@
                 <tbody>
                     <#list files as file>
                     <tr>
-                        <td>${file.originalName}</td>
+                        <td>
+                            <a href="/files/${file.path}">
+                                ${file.originalName}
+                            </a>
+                        </td>
                         <td>${file.createdAt}</td>
                     </tr>
                     </#list>
